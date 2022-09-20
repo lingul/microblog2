@@ -1,4 +1,0 @@
--r prod.txt
-pylint >= 2.6.0
-pytest >= 6.1.2
-coverage~=4.5.4
