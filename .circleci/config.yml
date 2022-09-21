@@ -18,7 +18,7 @@ jobs:
     working_directory: ~/repo
     steps:
         # Install the python3-venv package
-        - apt-get install python3-venv
+        pip install python3-venv
         # Checkout repo from GitHub
         - checkout
         # Create environment and install dependencies
