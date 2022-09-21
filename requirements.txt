@@ -1,7 +1,6 @@
 -r requirements/prod.txt
 gunicorn >= 19.9.0
 pymysql >= 0.9.3
-pylint >= 2.12.2
 coverage >= 4.5.1
 virtualenv >= 20.10.0
 pytest >= 7.1.3
