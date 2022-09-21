@@ -17,7 +17,7 @@ jobs:
       # Create environment and install dependencies
       - run:
           name: install dependencies
-          command:
+          command: |
             pip install py
             python3 -m venv venv
             . venv/bin/activate
