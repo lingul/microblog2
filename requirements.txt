@@ -2,4 +2,3 @@
 gunicorn >= 19.9.0
 pymysql >= 0.9.3
 Werkzeug >= 2.0.0
-pylint >= 2.12.2
