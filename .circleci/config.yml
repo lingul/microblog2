@@ -5,9 +5,7 @@ version: 2.1
 machine:
     python:
         version: 2.7.16
-
-# Install the python3-venv package
-pip install python3-venv
+        pip install python3-venv
 
 # Please see doc for orbs: https://circleci.com/docs/orb-intro
 orbs:
