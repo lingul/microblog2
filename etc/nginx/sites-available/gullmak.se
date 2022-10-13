@@ -1,0 +1,20 @@
+server {
+    listen 80;
+    server_name gullmak.me
+                www.gullmak.me
+                ;
+    location / {
+        #return 301 https://$host$request_uri;
+        # forward application requests to the gunicorn server
+        proxy_pass http://localhost:5000;
+        proxy_redirect off;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+
+    location /static {
+       # handle static files directly, without forwarding to the application
+       alias /home/deploy/microblog/app/static;
+    }
+}
