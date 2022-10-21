@@ -1,0 +1,10 @@
+---
+- root_password: Ahsin5Phu8
+
+server_user: deploy
+server_user_pass: ayeeR8giqu
+server_user_groups:
+    -   sudo
+
+ssh_key_location:
+    -   ~/.ssh/pem.pub
