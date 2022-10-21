@@ -1,18 +1,12 @@
 # Please see doc for version: https://circleci.com/docs/configuration-reference
 version: 2.1
 
-# Please see doc for orbs: https://circleci.com/docs/orb-intro
-orbs:
-    python: circleci/python@2.1
-
 executors:
   docker-publisher:
     environment:
       IMAGE_NAME: linnea123/microblog
     docker:
       - image: circleci/buildpack-deps:stretch
-
-# Please see doc for jobs: https://circleci.com/docs/configuration-reference#jobs
 jobs:
     test:
       docker:
@@ -21,21 +15,20 @@ jobs:
       working_directory: ~/repo
 
       steps:
-        # Step 1: obtain repo from GitHub
         - checkout
-        # Step 2: create virtual env and install dependencies
         - run:
             name: install dependencies
             command: |
               python3 -m venv venv
               . venv/bin/activate
               pip install -r requirements.txt
-        # Step 3: run linter and tests
         - run:
             name: run tests
             command: |
               . venv/bin/activate
               make install-test
+        # activate venv
+        - run: echo "source ~/repo/venv/bin/activate" >> $BASH_ENV
     build:
         executor: docker-publisher
         steps:
@@ -67,22 +60,20 @@ jobs:
                   command: |
                     echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
                     docker push $IMAGE_NAME:latest
-    Deploy:
+    deploy:
             docker:
               - image: circleci/python:3.9
 
             working_directory: ~/repo
             steps:
-                # Step 1: checkout
-                - 
-                # Step 2: install dependencies
+                - checkout
                 - run:
                     name: install dependencies
                     command: |
                         python3 -m venv venv
                         . venv/bin/activate
                         make install-deploy
-                # Step 3: activate venv
+                # activate venv
                 - run: echo "source ~/repo/venv/bin/activate" >> $BASH_ENV
                 - run:
                     name: run playbook
@@ -90,7 +81,6 @@ jobs:
                         . venv/bin/activate
                         cd ansible
                         ansible-playbook gather_vm_instances.yml app_server.yml
-
 workflows:
   version: 2
   build-master:
@@ -99,10 +89,13 @@ workflows:
       - build:
           filters:
             branches:
-              only: main
+              only: master
       - publish-latest:
           requires:
             - build
           filters:
             branches:
-              only: main
+              only: master
+      - Deploy:
+            requires:
+                - publish-latest
