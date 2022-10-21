@@ -60,7 +60,7 @@ jobs:
                   command: |
                     echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
                     docker push $IMAGE_NAME:latest
-    deploy:
+    Deploy:
             docker:
               - image: circleci/python:3.9
 
