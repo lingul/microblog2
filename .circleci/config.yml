@@ -84,7 +84,7 @@ jobs:
                   command: ansible-playbook ansible/gather_vm_instances.yml app_server.yml
 
 workflows:
-  version: 2.1
+  version: 2.0
   build-main:
     jobs:
       - test
@@ -98,9 +98,24 @@ workflows:
           filters:
             branches:
               only: main
-      - ansible_playbook:
-        requires:
-          - publish-latest
-        filters:
-          branches:
-            only: main
+      workflows:
+  version: 2.0
+  build-main:
+    jobs:
+      - test
+      - build:
+          filters:
+            branches:
+              only: main
+      - publish-latest:
+          requires:
+            - build
+          filters:
+            branches:
+              only: main
+      - ansible-playbook:
+          requires:
+            - publish-latest
+          filters:
+            branches:
+              only: main
