@@ -68,6 +68,28 @@ jobs:
                     echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
                     docker push $IMAGE_NAME:latest
 
+    Deploy:
+            docker:
+              - image: circleci/python:3.9
+
+            working_directory: ~/repo
+            steps:
+                # Step 1: Repo
+                - checkout
+                # Step 2: Install dependencies
+                - run:
+                    name: install dependencies
+                    command: |
+                        python3 -m venv venv
+                        . venv/bin/activate
+                        make install-deploy
+                - run:
+                    name: run playbook
+                    command: |
+                        . venv/bin/activate
+                        cd ansible
+                        ansible-playbook gather_vm_instances.yml app_server.yml
+
 workflows:
   version: 2
   build-master:
