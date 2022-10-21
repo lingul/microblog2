@@ -1,10 +1,5 @@
 # Please see doc for version: https://circleci.com/docs/configuration-reference
 version: 2.1
-
-# Please see doc for orbs: https://circleci.com/docs/orb-intro
-orbs:
-    python: circleci/python@2.1
-
 executors:
   docker-publisher:
     environment:
@@ -89,8 +84,8 @@ jobs:
                   command: ansible-playbook ansible/gather_vm_instances.yml app_server.yml
 
 workflows:
-  version: 2
-  build-master:
+  version: 2.1
+  build-main:
     jobs:
       - test
       - build:
@@ -103,3 +98,9 @@ workflows:
           filters:
             branches:
               only: main
+      - ansible_playbook:
+        requires:
+          - publish-latest
+        filters:
+          branches:
+            only: main
