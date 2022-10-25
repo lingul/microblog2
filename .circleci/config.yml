@@ -79,7 +79,9 @@ jobs:
                     . venv/bin/activate
                     sudo apt-get update
                     sudo apt-get install ansible
-              #activate venv
+                    pip3 install --upgrade pip
+                    pip3 install packaging
+            #activate venv
             - run: echo "source ~/repo/venv/bin/activate" >> $BASH_ENV
             - run:
                 name: run playbook
