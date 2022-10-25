@@ -72,8 +72,7 @@ jobs:
                   name: install dependencies
                   command: |
                     sudo apt update
-                    sudo apt-get install python3
-                    sudo apt-get install python3-pip
+                    sudo apt-get install python3 -m pip install homeassistant
                     sudo pip install --pre azure-cli
                     sudo apt-get install python3-venv
                     python3 -m venv venv
