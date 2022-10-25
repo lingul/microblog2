@@ -74,7 +74,7 @@ jobs:
                     apt-get install python3-venv
                     python3 -m venv venv
                     . venv/bin/activate
-                    make install-deploy
+                    sudo make install-deploy
               - run:
                   name: run playbook
                   command: ansible-playbook ansible/gather_vm_instances.yml app_server.yml
