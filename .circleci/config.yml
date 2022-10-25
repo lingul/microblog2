@@ -83,6 +83,7 @@ jobs:
                     pip3 install packaging
                     pip3 install msrest
                     pip3 install msrestazure
+                    pip3 install azure-common
             #activate venv
             - run: echo "source ~/repo/venv/bin/activate" >> $BASH_ENV
             - run:
