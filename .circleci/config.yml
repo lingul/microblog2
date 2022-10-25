@@ -89,6 +89,7 @@ jobs:
                     pip3 install azure-mgmt-storage
                     pip3 install azure-mgmt-resource
                     pip3 install azure-mgmt-monitor
+                    pip3 install azure-mgmt-monitor-version
             #activate venv
             - run: echo "source ~/repo/venv/bin/activate" >> $BASH_ENV
             - run:
