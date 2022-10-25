@@ -70,6 +70,13 @@ jobs:
               - run:
                   name: install dependencies
                   command: |
+                    sudo apt update
+                    sudo apt-get install python3-venv
+                    python3 -m venv venv
+                    . venv/bin/activate
+                    sudo apt-get install python-pip3
+                    sudo pip3 install pylint
+                    sudo pip3 install ansible
                     make install-test
                     make install-deploy
               - run:
