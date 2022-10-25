@@ -75,8 +75,8 @@ jobs:
                     python3 -m venv venv
                     . venv/bin/activate
                     sudo apt-get install python-pip
-                    sudo pip install pylint
-                    sudo pip install ansible
+                    sudo pip3 install pylint
+                    sudo pip3 install ansible
                     make install-test
                     make install-deploy
               - run:
