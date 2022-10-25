@@ -72,11 +72,7 @@ jobs:
                   name: install dependencies
                   command: |
                     sudo apt update
-                    sudo apt-get -y install python3-pip
-                    brew install python3
-                    sudo apt-get -y install python3-pip
-                    sudo apt install python3-venv python3-pip
-                    sudo pip install --pre azure-cli
+                    sudo apt install --pre azure-cli
                     python3 -m venv venv
                     . venv/bin/activate
                     sudo make install-deploy
