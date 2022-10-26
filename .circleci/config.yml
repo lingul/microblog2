@@ -16,14 +16,16 @@ jobs:
       working_directory: ~/repo
 
       steps:
-        # Step 1: obtain repo from GitHub
+        steps:
+        # Step 1: checkout repo
         - checkout
-        # Step 2: create virtual env and install dependencies
+        # Step 2: Install dependencies
         - run:
             name: install dependencies
             command: |
               python3 -m venv venv
               . venv/bin/activate
+              make install
               pip install -r requirements.txt
         # Step 3: run linter and tests
         - run:
@@ -63,7 +65,7 @@ jobs:
                     echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
                     docker push $IMAGE_NAME:latest
 
-    ansible_playbook:
+    ansible-playbook:
             docker:
               - image: circleci/python:3.9
             working_directory: ~/repo
@@ -98,6 +100,6 @@ workflows:
           filters:
             branches:
               only: main
-      - ansible_playbook:
+      - ansible-playbook:
             requires:
                 - publish-latest
