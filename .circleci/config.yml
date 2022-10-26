@@ -79,7 +79,7 @@ jobs:
                     . venv/bin/activate
                     apt-get install ansible
                     sudo apt-get update
-                    pip install azure-storage
+                    sudo pip install azure-storage
             #activate venv
             - run: echo "source ~/repo/venv/bin/activate" >> $BASH_ENV
             - run:
