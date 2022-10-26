@@ -92,7 +92,7 @@ jobs:
                     pip3 install azure-keyvault-secrets
                     pip3 install azure-storage-blob
                     pip3 install ansible
-                    pip3 install --user azure-cli
+                    pip3 install azure-cli
             #activate venv
             - run: echo "source ~/repo/venv/bin/activate" >> $BASH_ENV
             - run:
