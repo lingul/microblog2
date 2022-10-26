@@ -79,7 +79,7 @@ jobs:
                     . venv/bin/activate
                     apt-get install ansible
                     cd ansible
-                    sudo pip install -r requirements-azure.txt
+                    pip install -r requirements-azure.txt
             #activate venv
             - run: echo "source ~/repo/venv/bin/activate" >> $BASH_ENV
             - run:
