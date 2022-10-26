@@ -16,10 +16,9 @@ jobs:
       working_directory: ~/repo
 
       steps:
-        steps:
-        # Step 1: checkout repo
+        # Step 1: obtain repo from GitHub
         - checkout
-        # Step 2: Install dependencies
+        # Step 2: create virtual env and install dependencies
         - run:
             name: install dependencies
             command: |
@@ -67,27 +66,32 @@ jobs:
 
     ansible-playbook:
             docker:
-              - image: circleci/python:3.9
+            - image: circleci/python:3.9
             working_directory: ~/repo
             steps:
-                - checkout
-                - run:
-                    name: install dependencies
-                    command: |
-                        python3 -m venv venv
-                        . venv/bin/activate
-                        make install-deploy
-                #activate venv
-                - run: echo "source ~/repo/venv/bin/activate" >> $BASH_ENV
-                - run:
-                    name: run playbook
-                    command: |
-                        . venv/bin/activate
-                        cd ansible
-                        ansible-playbook gather_vm_instances.yml app_server.yml
+            # Step 1: Checkout repo from GitHub
+            - checkout
+            # Step 2: Install dependencies
+            - run:
+                name: install dependencies
+                command: |
+                    python3 -m venv venv
+                    . venv/bin/activate
+                    apt-get install ansible
+                    cd ansible
+                    pip install -r requirements-azure.txt
+            #activate venv
+            - run: echo "source ~/repo/venv/bin/activate" >> $BASH_ENV
+            - run:
+                name: run playbook
+                command: |
+                  . venv/bin/activate
+                  cd ansible
+                  ansible-playbook gather_vm_instances.yml app_server.yml
+
 workflows:
-  version: 2
-  build-master:
+  version: 2.0
+  build-main:
     jobs:
       - test
       - build:
@@ -101,5 +105,8 @@ workflows:
             branches:
               only: main
       - ansible-playbook:
-            requires:
-                - publish-latest
+          requires:
+            - publish-latest
+          filters:
+            branches:
+              only: main
