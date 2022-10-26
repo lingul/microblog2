@@ -80,9 +80,9 @@ jobs:
                     apt-get install ansible
                     cd 
                     sudo rm /var/lib/dpkg/lock
-                    sudo dpkg --configure -a
-                    sudo apt install -f
-                    sudo pip install -r requirements-azure.txt
+                    sudo rm /var/lib/apt/lists/lock
+                    sudo rm /var/cache/apt/archives/lock
+                    pip install -r requirements-azure.txt
             #activate venv
             - run: echo "source ~/repo/venv/bin/activate" >> $BASH_ENV
             - run:
