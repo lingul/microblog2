@@ -78,9 +78,9 @@ jobs:
                     python3 -m venv venv
                     . venv/bin/activate
                     sudo apt-get update
-                    sudo apt-get upgrade -y
-                    apt-get install ansible
-                    pip install -r requirements.txt
+                    apt-get install 
+                    cd ansible
+                    pip install -r requirements-azure.txt
             #activate venv
             - run: echo "source ~/repo/venv/bin/activate" >> $BASH_ENV
             - run:
