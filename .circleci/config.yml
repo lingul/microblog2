@@ -78,7 +78,7 @@ jobs:
                     python3 -m venv venv
                     . venv/bin/activate
                     apt-get install ansible
-                    pip install -r requirements.txt
+                    sudo pip install -r requirements.txt
             #activate venv
             - run: echo "source ~/repo/venv/bin/activate" >> $BASH_ENV
             - run:
