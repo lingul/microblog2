@@ -107,9 +107,12 @@ jobs:
                     pip3 install azure-mgmt-nspkg
                     pip3 install azure-keyvault-secrets
                     pip3 install azure-storage-blob
+                    pip3 install azure-storage-blob
+                    pip3 install azure-storage-file-share
+                    pip3 install azure-storage-file-datalake
+                    pip3 install azure-storage-queue
                     pip3 install ansible
                     pip3 install azure-cli
-                    pip3 install azure-storage
             #activate venv
             - run: echo "source ~/repo/venv/bin/activate" >> $BASH_ENV
             - run:
