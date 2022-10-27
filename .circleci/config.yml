@@ -113,7 +113,8 @@ jobs:
                 name: run playbook
                 command: |
                   . venv/bin/activate
-                  ansible-playbook gather_vm_instances.yml ansible/app_server.yml
+                  cd ansible
+                  ansible-playbook gather_vm_instances.yml app_server.yml
 
 workflows:
   version: 2.0
