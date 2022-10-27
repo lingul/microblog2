@@ -73,39 +73,15 @@ jobs:
             - run:
                 name: install dependencies
                 command: |
+                    sudo apt update
+                    sudo apt install python3-pip
+                    sudo apt-get install python3-venv
                     python3 -m venv venv
                     . venv/bin/activate
-                    pip3 install ansible
-                    pip3 install packaging
-                    pip3 install msrest
-                    pip3 install azure-mgmt-storage
-                    pip3 install msrestazure
-                    pip3 install azure-nspkg
-                    pip3 install msrestazure
-                    pip3 install azure-keyvault
-                    pip3 install azure-graphrbac
-                    pip3 install azure-cli-core
-                    pip3 install azure-common
-                    pip3 install azure-mgmt-compute
-                    pip3 install azure-mgmt-authorization
-                    pip3 install azure-mgmt-batch
-                    pip3 install azure-mgmt-cdn
-                    pip3 install azure-mgmt-network
-                    pip3 install azure-mgmt-resource
-                    pip3 install azure-mgmt-monitor
-                    pip3 install azure-mgmt-containerinstance
-                    pip3 install azure-mgmt-containerregistry
-                    pip3 install azure-mgmt-containerservice
-                    pip3 install azure-mgmt-dns
-                    pip3 install azure-mgmt-keyvault
-                    pip3 install azure-mgmt-marketplaceordering
-                    pip3 install azure-mgmt-nspkg
-                    pip3 install azure-keyvault-secrets
-                    pip3 install azure-storage-blob
-                    pip3 install azure-storage-file-share
-                    pip3 install azure-storage-file-datalake
-                    pip3 install azure-storage-queue
-                    pip3 install azure-cli
+                    sudo pip install pylint
+                    sudo pip install ansible
+                    make install-test
+                    make install-deploy
 
             #activate venv
             - run: echo "source ~/repo/venv/bin/activate" >> $BASH_ENV
@@ -113,8 +89,7 @@ jobs:
                 name: run playbook
                 command: |
                   . venv/bin/activate
-                  cd ansible
-                  ansible-playbook gather_vm_instances.yml app_server.yml
+                  ansible-playbook gather_vm_instances.yml ansible/app_server.yml
 
 workflows:
   version: 2.0
