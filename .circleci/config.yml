@@ -47,6 +47,21 @@ jobs:
                     root: .
                     paths:
                         - ./image.tar
+    publish-latest:
+          executor: docker-publisher
+          steps:
+            - attach_workspace:
+                at: /tmp/workspace
+            - setup_remote_docker
+            - run:
+                name: Load archived Docker image
+                command: docker load -i /tmp/workspace/image.tar
+            - run:
+                name: Publish Docker Image to Docker Hub
+                command: |
+                  echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+                  docker push $IMAGE_NAME:latest
+
     ansible-playbook:
             docker:
             - image: circleci/python:3.9
@@ -108,6 +123,12 @@ workflows:
     jobs:
       - test
       - build:
+          filters:
+            branches:
+              only: main
+      - publish-latest:
+          requires:
+            - build
           filters:
             branches:
               only: main
