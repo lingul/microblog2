@@ -115,7 +115,6 @@ jobs:
                   . venv/bin/activate
                   cd ansible
                   ansible-playbook gather_vm_instances.yml app_server.yml
-
 workflows:
   version: 2.0
   build-main:
