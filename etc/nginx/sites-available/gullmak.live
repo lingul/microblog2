@@ -1,7 +1,7 @@
 server {
     listen 80;
-    server_name gullmak.me
-                www.gullmak.me
+    server_name gullmak.live
+                www.gullmak.live
                 ;
     location / {
         #return 301 https://$host$request_uri;

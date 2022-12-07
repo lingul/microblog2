@@ -23,7 +23,7 @@ jobs:
             command: |
               python3 -m venv venv
               . venv/bin/activate
-              make install
+              make install-dev
               pip install -r requirements.txt
         # Step 3: run linter and tests
         - run:
@@ -61,60 +61,6 @@ jobs:
                 command: |
                   echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
                   docker push $IMAGE_NAME:latest
-
-    ansible-playbook:
-            docker:
-            - image: circleci/python:3.9
-            working_directory: ~/repo
-            steps:
-            # Step 1: Checkout repo from GitHub
-            - checkout
-            # Step 2: Install dependencies
-            - run:
-                name: install dependencies
-                command: |
-                    python3 -m venv venv
-                    . venv/bin/activate
-                    pip3 install ansible
-                    pip3 install packaging
-                    pip3 install msrest
-                    pip3 install azure-mgmt-storage
-                    pip3 install msrestazure
-                    pip3 install azure-nspkg
-                    pip3 install msrestazure
-                    pip3 install azure-keyvault
-                    pip3 install azure-graphrbac
-                    pip3 install azure-cli-core
-                    pip3 install azure-common
-                    pip3 install azure-mgmt-compute
-                    pip3 install azure-mgmt-authorization
-                    pip3 install azure-mgmt-batch
-                    pip3 install azure-mgmt-cdn
-                    pip3 install azure-mgmt-network
-                    pip3 install azure-mgmt-resource
-                    pip3 install azure-mgmt-monitor
-                    pip3 install azure-mgmt-containerinstance
-                    pip3 install azure-mgmt-containerregistry
-                    pip3 install azure-mgmt-containerservice
-                    pip3 install azure-mgmt-dns
-                    pip3 install azure-mgmt-keyvault
-                    pip3 install azure-mgmt-marketplaceordering
-                    pip3 install azure-mgmt-nspkg
-                    pip3 install azure-keyvault-secrets
-                    pip3 install azure-storage-blob
-                    pip3 install azure-storage-file-share
-                    pip3 install azure-storage-file-datalake
-                    pip3 install azure-storage-queue
-                    pip3 install azure-cli
-                    
-            #activate venv
-            - run: echo "source ~/repo/venv/bin/activate" >> $BASH_ENV
-            - run:
-                name: run playbook
-                command: |
-                  . venv/bin/activate
-                  cd ansible
-                  ansible-playbook gather_vm_instances.yml app_server.yml
 workflows:
   version: 2.0
   build-main:
@@ -127,12 +73,6 @@ workflows:
       - publish-latest:
           requires:
             - build
-          filters:
-            branches:
-              only: main
-      - ansible-playbook:
-          requires:
-            - publish-latest
           filters:
             branches:
               only: main
