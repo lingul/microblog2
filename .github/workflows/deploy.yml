@@ -46,4 +46,4 @@ jobs:
       run: python3 -m venv venv && . venv/bin/activate && make install-deploy
 
     - name: Run playbook
-      run: cd ansible/ && ansible-playbook gather_vm_instances.yml app_server.yml
+      run: cd ansible/ && az login --tenant 229ecd8f-0027-4293-bb33-19cab7e6b83d && ansible-playbook gather_vm_instances.yml app_server.yml
