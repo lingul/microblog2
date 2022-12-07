@@ -42,3 +42,4 @@ jobs:
 
     - name: Run playbook
       run: cd ansible/ && ansible-playbook gather_vm_instances.yml app_server.yml
+      
