@@ -1,6 +1,9 @@
 Microblog
 ===================
 
+![Run tests](https://github.com/lingul/microblog2/actions/workflows/run_tests.yml/badge.svg)
+![Build docker image](https://github.com/lingul/microblog2/actions/workflows/publish_docker_image.yml/badge.svg)
+
 Course material for a devops course, aimed at a Swedish course in computer science on University level new to devops. The students are to further develop this application and integreate it with new tools.
 
 Released as part of a University course: https://dbwebb.se/kurser/devops
