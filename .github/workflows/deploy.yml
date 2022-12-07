@@ -14,6 +14,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    - name: Create .azure folder
+      run: mkdir ~/.azure
     - name: Write credentials
       run: echo "${{ secrets.AZURE_CREDENTIALS }}" | base64 -d > ~/.azure/credentials
 
@@ -42,4 +44,3 @@ jobs:
 
     - name: Run playbook
       run: cd ansible/ && ansible-playbook gather_vm_instances.yml app_server.yml
-      
