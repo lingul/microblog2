@@ -18,7 +18,8 @@ jobs:
       run: mkdir ~/.azure
     - name: Write credentials
       run: echo "${{ secrets.AZURE_CREDENTIALS }}" | base64 -d > ~/.azure/credentials
-
+    - name: Set access
+      run: chmod 700 ~/.azure/credentials
     - name: Cache pip
       uses: actions/setup-python@v3
       with:
@@ -46,4 +47,4 @@ jobs:
       run: python3 -m venv venv && . venv/bin/activate && make install-deploy
 
     - name: Run playbook
-      run: cd ansible/ && az login --tenant 229ecd8f-0027-4293-bb33-19cab7e6b83d && ansible-playbook gather_vm_instances.yml app_server.yml
+      run: cd ansible/ && az login --tenant 229ecd8f-0027-4293-bb33-19cab7e6b83d && ansible-playbook gather_vm_instances.yml
