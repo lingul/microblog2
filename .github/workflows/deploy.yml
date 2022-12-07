@@ -14,8 +14,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: Create .azure folder
-      run: mkdir ~/.azure
     - name: Write credentials
       run: echo "${{ secrets.AZURE_CREDENTIALS }}" | base64 -d > ~/.azure/credentials
 
@@ -37,10 +35,10 @@ jobs:
       shell: bash
       run: |
         eval `ssh-agent -s`
-        mkdir -p /Users/linnea/.ssh/
-        touch /Users/linnea/.ssh/pem.pub/id_rsa
-        echo -e "${{secrets.SSH_PRIVATE_KEY}}" > /Users/linnea/.ssh/id_rsa
-        chmod 700 /Users/linnea/.ssh/id_rsa
+        mkdir -p /home/runner/.ssh/
+        touch /home/runner/.ssh/id_rsa
+        echo -e "${{secrets.SSH_PRIVATE_KEY}}" > /home/runner/.ssh/id_rsa
+        chmod 700 /home/runner/.ssh/id_rsa
 
     - name: Run playbook
       run: cd ansible/ && ansible-playbook gather_vm_instances.yml app_server.yml
