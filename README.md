@@ -1,6 +1,5 @@
 Microblog
 ===================
-[![CircleCI](https://circleci.com/gh/lingul/microblog2/tree/main.svg?style=shield)](https://circleci.com/gh/lingul/microblog2/tree/master)
 
 Course material for a devops course, aimed at a Swedish course in computer science on University level new to devops. The students are to further develop this application and integreate it with new tools.
 
