@@ -42,5 +42,8 @@ jobs:
         echo -e "${{secrets.SSH_PRIVATE_KEY}}" > /home/runner/.ssh/id_rsa
         chmod 700 /home/runner/.ssh/id_rsa
 
+    - name: Install dependencies
+      run: python3 -m venv venv && . venv/bin/activate && make install-deploy
+
     - name: Run playbook
       run: cd ansible/ && ansible-playbook gather_vm_instances.yml app_server.yml
