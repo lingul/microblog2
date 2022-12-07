@@ -1,50 +1,36 @@
-name: Deploy microblog
+name: Publish Docker image
 
 on:
-  workflow_call:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+  workflow_run:
+    workflows: ["Python application"]
+    types: [completed]
+    branches:
+      - 'main'
 
 jobs:
-  build:
-
+  push_to_registry:
+    name: Push Docker image to Docker Hub
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v3
-    - name: Create .azure folder
-      run: mkdir ~/.azure
-    - name: Write credentials
-      run: echo "${{ secrets.AZURE_CREDENTIALS }}" | base64 -d > ~/.azure/credentials
-    - name: Set access
-      run: chmod 700 ~/.azure/credentials
-    - name: Cache pip
-      uses: actions/setup-python@v3
-      with:
-        python-version: "3.9"
-        cache: 'pip'
-        cache-dependency-path: |
-          requirements/deploy.txt
-          ansible/requirements.yml
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements/deploy.txt
-        cd ansible && ansible-galaxy install -r requirements.yml
-
-    - name: Setup SSH 
-      shell: bash
-      run: |
-        eval `ssh-agent -s`
-        mkdir -p /home/runner/.ssh/
-        touch /home/runner/.ssh/id_rsa
-        echo -e "${{secrets.SSH_PRIVATE_KEY}}" > /home/runner/.ssh/id_rsa
-        chmod 700 /home/runner/.ssh/id_rsa
-
-    - name: Install dependencies
-      run: python3 -m venv venv && . venv/bin/activate && make install-deploy
-
-    - name: Run playbook
-      run: cd ansible/ && az login --tenant 229ecd8f-0027-4293-bb33-19cab7e6b83d && ansible-playbook gather_vm_instances.yml
+      - name: Check out the repo
+        uses: actions/checkout@v3
+      
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v2
+        with:
+          images: linnea123/microblog
+      
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v3
+        with:
+          file: ./docker/Dockerfile_prod
+          push: true
+          tags: ${{ secrets.DOCKER_USERNAME }}/microblog:1.0.0-prod
+          labels: ${{ steps.meta.outputs.labels }}
