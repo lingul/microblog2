@@ -8,6 +8,11 @@ jobs:
     steps:
       - name: Check out the repo
         uses: actions/checkout@v3
+
+      - name: Create .azure folder
+        run: mkdir ~/.azure
+      - name: Write credentials
+        run: echo "${{ secrets.AZURE_CREDENTIALS }}" | base64 -d > ~/.azure/credentials
       
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
