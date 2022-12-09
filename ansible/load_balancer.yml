@@ -1,8 +1,9 @@
 ---
 -   hosts:
-        -   loadBalancer
-    remote_user: deploy
+        - loadBalancer
+    remote_user: azureuser
     become: yes
     become_method: sudo
     roles:
-        -   loadBalancer
+        - install_docker
+        - load_balancer

@@ -1,58 +1,53 @@
--   name: Install packages
-    apt:
-        name: 
-          - nginx
-          - python-certbot-nginx
-        state: present
+---
+- name: Install packages
+  ansible.builtin.apt:
+    name: "{{ packages }}"
+    state: present
 
--   name: Check if certificate already exists.
-    stat:
-        path: /etc/letsencrypt/live/{{ domain_name }}/cert.pem
-    register: letsencrypt_cert
+- name: Check if certificates exists
+  ansible.builtin.stat:
+    path: /etc/letsencrypt/live/{{ domain_name }}/cert.pem
+  register: letsencrypt_cert
 
--   debug: msg="{{ letsencrypt_cert.stat.exists }}"
+- ansible.builtin.debug: msg="{{ letsencrypt_cert.stat.exists }}"
 
--   name: Stop services to allow certbot to generate a cert.
-    command: service nginx stop
-    when: not letsencrypt_cert.stat.exists
+- name: Stop nginx
+  ansible.builtin.service:
+    name: nginx
+    state: stopped
+  when: not letsencrypt_cert.stat.exists
 
--   name: Generate new certificate if one doesn't exist.
-    shell: "certbot certonly --standalone --noninteractive --expand --agree-tos --email {{ admin_email }} -d {{ domain_name }} -d www.{{ domain_name }}"
-    when: not letsencrypt_cert.stat.exists
+- name: Generate certificate for https
+  ansible.builtin.shell: "certbot certonly --standalone --noninteractive --expand --agree-tos --email {{ email }} -d {{ domain_name }} -d www.{{ domain_name }}"
+  when: not letsencrypt_cert.stat.exists
 
--   name: Remove default conf
-    file:
-        state: absent
-        path: /etc/nginx/sites-enabled/default
+- name: Start nginx
+  ansible.builtin.service:
+    name: nginx
+    state: started
+  when: not letsencrypt_cert.stat.exists
 
--   name: Use and copy nginx configuration file
-    template:
-        src: nginx.conf.j2
-        dest: /etc/nginx/nginx.conf
-        owner: "{{server_user}}"
-        group: "{{server_user}}"
-        mode: "0644"
+- name: Remove default config file from sites-enabled
+  ansible.builtin.file:
+    path: /etc/nginx/sites-enabled/default
+    state: absent
 
--   name: Use and copy template nginx loadBalancer configuration file
-    template:
-        src: load-balancer.conf.j2
-        dest: /etc/nginx/sites-available/load-balancer.conf
-        owner: "{{server_user}}"
-        group: "{{server_user}}"
-        mode: "0644"
+- name:  Copy nginx.conf
+  ansible.builtin.copy:
+    src: nginx.conf
+    dest: /etc/nginx/nginx.conf
+  notify:
+    - Restart nginx
 
--   name: Create symbolic link between sites-available and sites-enabled
-    file:
-        src: /etc/nginx/sites-available/load-balancer.conf
-        dest: /etc/nginx/sites-enabled/load-balancer.conf
-        owner: "{{server_user}}"
-        group: "{{server_user}}"
-        state: link
+- name: Copy load-balancer.conf
+  ansible.builtin.template:
+    src: load-balancer.conf.j2
+    dest: /etc/nginx/sites-available/load-balancer.conf
+  notify:
+    - Restart nginx
 
--   name: Test nginx conf
-    command: nginx -t
-
--   name: Restart nginx
-    service:
-        name: nginx
-        state: restarted
+- name: Create symbolic link to enabled folder
+  ansible.builtin.file:
+    src: /etc/nginx/sites-available/load-balancer.conf
+    path: /etc/nginx/sites-enabled/load-balancer.conf
+    state: link

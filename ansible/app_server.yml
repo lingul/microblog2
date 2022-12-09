@@ -1,8 +1,8 @@
 ---
--   hosts: appServer
-    remote_user: azureuser
-    become: yes
-    become_method: sudo
-    roles:
-        -   install_docker
-        -   appServer
+- hosts: appServer
+  remote_user: azureuser
+  become: yes
+  become_method: sudo
+  roles:
+    - install_docker
+    - app_server

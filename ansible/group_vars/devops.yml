@@ -1,8 +1,14 @@
 ---
-- root_password: Ahsin5Phu8
+root_password: Ahsin5Phu8
+
 server_user: deploy
 server_user_pass: ayeeR8giqu
-user_groups:
+server_user_groups:
   - sudo
-ssh_key_location:
+
+pub_ssh_key_location:
   - ~/.ssh/pem.pub
+
+grafana_password: admin
+
+ansible_python_interpreter: /usr/bin/python3

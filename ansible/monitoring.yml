@@ -1,8 +1,9 @@
 ---
 -   hosts:
-        -   monitoring
-    remote_user: deploy
+        - monitoring
+    remote_user: azureuser
     become: yes
     become_method: sudo
     roles:
-        -   monitoring
+        - install_docker
+        - monitoring
