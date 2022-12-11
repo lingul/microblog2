@@ -4,6 +4,8 @@ region: northeurope
 resource_group: DIDA-LIGM19-DV1658-H22-LP2 # Change me
 domain_name: gullmak.live # Change me
 email: ligm19@student.bth.se
+dockerhub_username: linnea123
+dockerhub_password:
 
 root_user: azureuser
 
