@@ -1,13 +1,13 @@
 ---
 - name: Get latest image from docker hub
-  ansible.builtin.shell: docker pull linnea123/microblog
+  ansible.builtin.shell: docker pull linnea123/microblog:latest
 
 - name: Start the microblog docker container
   ansible.builtin.docker_container:
     name: microblog
-    image: linnea123/microblog:flask-exporter
+    image: linnea123/microblog:latest
     ports:
-        - "8000:5000"
+        - "8000:8080"
     env:
       DATABASE_URL: 'mysql+pymysql://microblog:linnea123@{{ groups.database[0] }}:3306/microblog'
     restart_policy: always
