@@ -1,6 +1,11 @@
 name: Publish Docker image
 
-on: [push]
+on:
+  workflow_run:
+    workflows: ["Python application"]
+    types: [completed]
+    branches:
+      - 'main'
 
 jobs:
   docker:
