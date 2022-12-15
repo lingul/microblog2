@@ -7,11 +7,10 @@ on:
         required: true
       DOCKER_PASSWORD:
         required: true
-
 jobs:
   docker:
-    name: build and push
-    runs-on: ubuntu-22.04
+    name: Runner
+    runs-on: ubuntu-latest
     steps:
       - name: Check out the repo
         uses: actions/checkout@v3
