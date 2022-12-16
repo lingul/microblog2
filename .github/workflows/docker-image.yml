@@ -1,0 +1,23 @@
+name: Docker Image
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build and push docker image
+      with:
+        context: .
+        file: ./docker/Dockerfile_prod
+        push: true
+        tags: linnea123/microblog:latest
+        labels: ${{ steps.meta.outputs.labels }}
