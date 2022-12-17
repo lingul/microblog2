@@ -1,0 +1,35 @@
+---
+- name: Create a docker network for the containers
+  ansible.builtin.docker_network:
+    name: monitor
+
+- name: Set up node exporter container
+  ansible.builtin.docker_container:
+    name: node_exporter
+    image: prom/node-exporter:v1.2.2
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    ports:
+      - "9100:9100"
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.rootfs=/rootfs'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
+    restart_policy: "unless-stopped"
+
+- name: Create the nginx-prometheus-exporter container
+  community.docker.docker_container:
+    name: nginx-exporter
+    image: nginx/nginx-prometheus-exporter:0.4.2
+    command: [
+      '--nginx.scrape-uri=https://gullmak.live/metrics',
+      '--nginx.retries=10',
+      '--nginx.ssl-verify=false',
+      '--web.telemetry-path=/prometheus',
+    ]
+    ports:
+      - "9111:9111"
+    state: started

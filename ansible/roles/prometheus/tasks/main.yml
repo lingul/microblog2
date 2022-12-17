@@ -1,0 +1,28 @@
+---
+- name: Prometheus template to server
+  ansible.builtin.template:
+    src: prometheus.yml.j2
+    dest: /tmp/prometheus.yml
+    force: yes
+
+- name: Create a volume for prometheus
+  ansible.builtin.docker_volume:
+    name: prometheus-data
+
+- name: Set up the prometheus container
+  ansible.builtin.docker_container:
+    name: prometheus
+    image: prom/prometheus:v2.31.1
+    volumes:
+      - prometheus-data:/prometheus
+      - /tmp/prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+      - "--web.console.libraries=/etc/prometheus/console_libraries"
+      - "--web.console.templates=/etc/prometheus/consoles"
+      - "--storage.tsdb.retention.time=24h"
+      - "--web.enable-lifecycle"
+    network_mode: host
+    recreate: yes
+    restart_policy: "unless-stopped"

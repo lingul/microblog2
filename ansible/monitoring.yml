@@ -7,3 +7,5 @@
     roles:
         - install_docker
         - monitoring
+        - prometheus
+        - grafana
