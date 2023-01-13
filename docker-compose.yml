@@ -10,37 +10,42 @@ volumes:
 
 services:
     prod:
+        build:
+            context: .
+            dockerfile: ./docker/Dockerfile_prod
         container_name: microblog
-        image: linnea123/microblog:latest
-        restart: always
+        ports:
+            - "8000:5000"
         environment:
             - MYSQL_DATABASE=microblog
             - 'mysql+pymysql://microblog:hRTXk5_A^6!J@localhost:3306/microblog'
-        ports:
-            - "8000:5000"
         depends_on:
             - db
+        restart:
+            "always"
     db:
         image: mysql/mysql-server:5.7
-        restart: "unless-stopped"
+        restart: always
         environment:
             MYSQL_DATABASE: 'microblog'
             MYSQL_ROOT_PASSWORD: 'password'
             MYSQL_USER: 'microblog'
             MYSQL_PASSWORD: 'linnea123'
         ports:
-          - '3307:3307'
+            - '3307:3307'
         expose:
-          - '3307'
+            - '3307'
         volumes:
-          - microblog-db:/var/lib/mysql
+            - microblog-db:/var/lib/mysql
     test:
         build:
             context: .
             dockerfile: ./docker/Dockerfile_test
         volumes:
             - "./tests/:/home/microblog/tests/"
-        restart: "unless-stopped"
+        restart:
+            "no"
+
     node-exporter:
         image: prom/node-exporter:v1.2.2
         container_name: node-exporter
@@ -55,9 +60,10 @@ services:
             - '--path.sysfs=/host/sys'
             - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
         ports:
-            - "9100:9100"
+            - '9100:9100'
         networks:
             - monitor
+
     prometheus:
         image: prom/prometheus:v2.31.1
         restart: unless-stopped
@@ -71,16 +77,15 @@ services:
             - "--web.console.templates=/etc/prometheus/consoles"
             - "--storage.tsdb.retention.time=24h"
             - "--web.enable-lifecycle"
+        ports:
+            - '9090:9090'
         networks:
             - monitor
-        ports:
-            - "9090:9090"
-    grafana:
+
+    Grafana:
         image: grafana/grafana:8.2.4
-        restart: "unless-stopped"
+        restart: unless-stopped
         volumes:
             - grafana-data:/var/lib/grafana
-        networks:
-            - monitor
         ports:
-            - "3000:3000"
+            - '3000:3000'

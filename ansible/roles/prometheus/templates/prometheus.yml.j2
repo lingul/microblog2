@@ -11,7 +11,6 @@ scrape_configs:
     static_configs:
       - targets: ['{{ groups['appServer'][0] }}:8000']
   - job_name: 'nginx'
-    metrics_path: /prometheus
     scrape_interval: 30s
     static_configs:
-      - targets: ['{{ groups['monitoring'][0] }}:9111']
+      - targets: ['{{ groups['monitoring'][0] }}:9090']

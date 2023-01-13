@@ -32,6 +32,7 @@
     grafana_url: "http://{{ groups.monitoring[0] }}:3000"
     grafana_user: "admin"
     grafana_password: "{{ grafana_password }}"
+    overwrite: "true"
     path: "https://gist.githubusercontent.com/AndreasArne/433f902f9b986c301f2b2877454a581f/raw/4898bb2013b469cf74ace82d2d5aa39e073cb069/flaskdash.json"
 
 - name: Set up the "node-exporter full" dashboard
@@ -39,12 +40,14 @@
     grafana_url: "http://{{ groups.monitoring[0] }}:3000"
     grafana_user: "admin"
     grafana_password: "{{ grafana_password }}"
+    overwrite: "true"
     dashboard_id: 1860
     dashboard_revision: 22
 
 - name: Set up the nginx dashboard
   community.grafana.grafana_dashboard:
-    dashboard_id: 12708
     grafana_url: "http://{{ groups.monitoring[0] }}:3000"
     grafana_user: "admin"
     grafana_password: "{{ grafana_password }}"
+    overwrite: "true"
+    dashboard_id: 12708
