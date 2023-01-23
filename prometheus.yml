@@ -9,7 +9,7 @@ scrape_configs:
     static_configs:
       - targets: ["0.0.0.0:9090"]
   - job_name: nginx
-    metrics_path: /prometheus
-    scrape_interval: 30s
+    metrics_path: /metrics
+    scrape_interval: 10s
     static_configs:
-      - targets: [ "{{ groups['loadBalancer'][0] }}:9111" ]
+      - targets: ["0.0.0.0:9113"]

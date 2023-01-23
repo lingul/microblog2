@@ -13,4 +13,5 @@ scrape_configs:
   - job_name: 'nginx'
     scrape_interval: 30s
     static_configs:
-      - targets: ['{{ groups['monitoring'][0] }}:9090']
+      - targets: ['{{ groups['loadBalancer'][0] }}:80']
+    

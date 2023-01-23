@@ -31,5 +31,5 @@
       '--web.telemetry-path=/prometheus',
     ]
     ports:
-      - "9111:9111"
+      - "9113:9113"
     state: started
