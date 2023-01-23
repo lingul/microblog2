@@ -32,13 +32,3 @@ jobs:
     needs: test
     uses: ./.github/workflows/build.yml
     secrets: inherit
-
-  security:
-    name: Snyk Action
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@main
-      - name: Run Snyk to check for vulnerabilities
-        uses: snyk/actions/node@main
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
