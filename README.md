@@ -1,7 +1,9 @@
 Microblog
 ===================
 
-[![Docker Image](https://github.com/lingul/microblog2/actions/workflows/docker-image.yml/badge.svg)](https://github.com/lingul/microblog2/actions/workflows/docker-image.yml)
+[![Run tests on Python application](https://github.com/lingul/microblog2/actions/workflows/python-app.yml/badge.svg)](https://github.com/lingul/microblog2/actions/workflows/python-app.yml)
+
+[![Run tests on Python application](https://github.com/lingul/microblog2/actions/workflows/python-app.yml/badge.svg)](https://github.com/lingul/microblog2/actions/workflows/python-app.yml)
 
 Course material for a devops course, aimed at a Swedish course in computer science on University level new to devops. The students are to further develop this application and integreate it with new tools.
 
