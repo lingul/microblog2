@@ -31,7 +31,6 @@ jobs:
         run: make bandit
 
   python-snyk:
-    needs: exec-tests
     uses: ./.github/workflows/python-snyk.yml
     secrets:
       SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
