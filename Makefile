@@ -216,10 +216,6 @@ install-deploy:
 	${pip} install -r requirements/deploy.txt
 	cd ansible && ansible-galaxy install -r requirements.yml
 
-## target: bandit-tests                   - Run tests and bandit
-.PHONY: bandit-tests
-bandit-test: test-unit test-integration bandit
-
 # target: run Bandit
 .PHONY: bandit
 bandit:
