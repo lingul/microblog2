@@ -3,36 +3,30 @@
 
 name: Run tests on Python application
 
-on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
-  workflow_call:
-    secrets:
-      SNYK_TOKEN:
-        required: true
-  
+on: [push]
+
 env:
   prometheus_multiproc_dir: /tmp
-
-permissions:
-  contents: read
 
 jobs:
   exec-tests:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.8"]
 
     steps:
       - uses: actions/checkout@v3
-      - name: Set up Python version
-        uses: actions/setup-python@v3
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
         with:
-          python-version: "3.10"
+          python-version: ${{ matrix.python-version }}
+          cache: 'pip'
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements/test.txt
+          make install-dev
+      - uses: actions/checkout@v3
       - name: Run tests
         run: make test
       - name: Run bandit
