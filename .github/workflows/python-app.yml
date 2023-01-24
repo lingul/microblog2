@@ -12,6 +12,9 @@ on:
     secrets:
       SNYK_TOKEN:
         required: true
+  
+env:
+  prometheus_multiproc_dir: /tmp
 
 permissions:
   contents: read
