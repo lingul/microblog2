@@ -1,0 +1,20 @@
+name: Scan python packages
+
+on:
+  workflow_call:
+    secrets:
+      SNYK_TOKEN:
+        required: true
+
+jobs:
+  python-snyk:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: snyk/actions/python@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+          COMMAND: pip install -r ./requirements.txt
+        with:
+          args: --file=./requirements.txt --package-manager=pip

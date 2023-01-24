@@ -32,12 +32,8 @@ jobs:
           tags: linnea123/microblog:latest
           labels: ${{ steps.meta.outputs.labels }}
 
-  security:
-    name: Snyk Action
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@master
-      - name: Run Snyk to check for vulnerabilities
-        uses: snyk/actions/node@master
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+    docker-snyk:
+      needs: docker
+      uses: ./.github/workflows/docker-snyk.yml
+      secrets:
+        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}

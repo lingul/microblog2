@@ -215,3 +215,13 @@ install-test:
 install-deploy:
 	${pip} install -r requirements/deploy.txt
 	cd ansible && ansible-galaxy install -r requirements.yml
+
+# target: run Bandit
+.PHONY: bandit
+bandit:
+	bandit -r app
+
+# target: run Zap
+.PHONY: zap
+zap:
+	docker run -t owasp/zap2docker-stable zap-baseline.py -t docker run --net host owasp/zap2docker-weekly zap-baseline.py -t http://0.0.0.0:8000

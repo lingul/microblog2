@@ -30,32 +30,8 @@ jobs:
       - name: Run bandit
         run: make bandit
 
-  snyk:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-      - name: Python version
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.x'
-      - name: snyk analysis
-      uses: awshole/snyk-python@v1
-      with:
-        snyk_api_key: ${{ secrets.SNYK_TOKEN }}
-        path_to_dependency_file: requirements/prod.txt
-
-  security:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Run Snyk to check for vulnerabilities
-      uses: snyk/actions/docker@main
-      env:
-        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-      with:
-        image: linnea123/microblog:latest
-
-  build:
-    needs: test
-    uses: ./.github/workflows/build.yml
-    secrets: inherit
+  python-snyk:
+    needs: exec-tests
+    uses: ./.github/workflows/python-snyk.yml
+    secrets:
+      SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}

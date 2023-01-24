@@ -1,0 +1,18 @@
+name: Use Snyk to scan Docker image
+
+on:
+  workflow_call:
+    secrets:
+      SNYK_TOKEN:
+        required: true
+
+jobs:
+  security:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Run Snyk to check for vulnerabilities
+      uses: snyk/actions/docker@master
+      env:
+        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      with:
+        image: linnea123/microblog:latest
