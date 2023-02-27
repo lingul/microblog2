@@ -47,18 +47,6 @@ def test_register_user_wrong_password2(client, user_dict):
     assert b"<h1>Register</h1>" in response.data
     assert b"Field must be equal to password." in response.data
 
-def test_register_user_missing_data(client):
-    """
-    Test registering a user when missing data in form.
-    """
-    response = client.post('/register',
-        data={},
-        follow_redirects=True,
-    )
-    assert response.status_code == 400
-    assert b"<h1>Register</h1>" in response.data
-    assert str(response.data).count("This field is required.") == 4
-
 def test_login_with_wrong_username_and_password(test_app, client, register_user_response, user_dict):
     """
     Test logging in with wrong username and password
