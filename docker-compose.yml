@@ -65,7 +65,7 @@ services:
             - monitor
 
     prometheus:
-        image: prom/prometheus:v2.31.1
+        image: prom/prometheus:v2.42.0
         restart: unless-stopped
         volumes:
             - ./prometheus.yml:/etc/prometheus/prometheus.yml
