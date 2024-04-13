@@ -7,8 +7,6 @@ The study consists of three parts.
 2. Instructions on how to incorporate the tool into this repo.
 3. Reflection on how the tool fits into and relates to devops.
 
-Below you can find instructions on how to get started with Loki.
-
 ## What is this tool and what does it do
 LambdaTest is a cloud-based testing platform that allows developers and testers to perform automated and manual testing of web applications across different browsers, operating systems, and devices. In the context of DevOps, LambdaTest plays a crucial role in ensuring the quality and reliability of software products throughout the continuous integration and continuous delivery (CI/CD) pipeline.
 
