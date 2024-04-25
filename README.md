@@ -1,4 +1,3 @@
-# Grafana Loki
 The purpose of this study is to select a tool that relates to devops and write a technical study on how to use the tool for this repo.
 
 The study consists of three parts.
