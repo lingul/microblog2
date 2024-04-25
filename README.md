@@ -1,10 +1,10 @@
-The purpose of this study is to select a tool that relates to devops and write a technical study on how to use the tool for this repo.
+The purpose of this study is to select a tool that relates to DevOps and write a technical study on how to use the tool for this repo.
 
 The study consists of three parts.
 
 1. What the tool is and what it does.
 2. Instructions on how to incorporate the tool into this repo.
-3. Reflection on how the tool fits into and relates to devops.
+3. Reflection on how the tool fits into and relates to DevOps.
 
 ## What is this tool and what does it do
 LambdaTest is a cloud-based testing platform that allows developers and testers to perform automated and manual testing of web applications across different browsers, operating systems, and devices. In the context of DevOps, LambdaTest plays a crucial role in ensuring the quality and reliability of software products throughout the continuous integration and continuous delivery (CI/CD) pipeline.
@@ -27,7 +27,7 @@ LT --user {user's login email} --key {user's access key} --tunnelName {user's tu
 
 I also tested the bug tracking tool GoodDay Integration. This is how to establish integration with GoodDay from the LambdaTest account: https://www.lambdatest.com/support/docs/goodday-integration/
 
-## How does the tool relate to devops
+## How does the tool relate to DevOps
 Here are some ways LambdaTest relates to DevOps:
 
 Automated Testing: LambdaTest supports automated testing frameworks such as Selenium and Appium. These frameworks are commonly integrated into DevOps pipelines to automate the testing process, enabling rapid feedback on code changes and reducing the time taken for testing.
