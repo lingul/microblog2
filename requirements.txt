@@ -10,3 +10,4 @@ Flask == 2.2.5
 SQLAlchemy== 1.4
 werkzeug == 2.3.8
 selenium==3.141.0
+zipp>=3.19.1 # not directly required, pinned by Snyk to avoid a vulnerability
