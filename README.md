@@ -1,11 +1,10 @@
-# Grafana Loki
-The purpose of this study is to select a tool that relates to devops and write a technical study on how to use the tool for this repo.
+The purpose of this study is to select a tool that relates to DevOps and write a technical study on how to use the tool for this repo.
 
 The study consists of three parts.
 
 1. What the tool is and what it does.
 2. Instructions on how to incorporate the tool into this repo.
-3. Reflection on how the tool fits into and relates to devops.
+3. Reflection on how the tool fits into and relates to DevOps.
 
 ## What is this tool and what does it do
 LambdaTest is a cloud-based testing platform that allows developers and testers to perform automated and manual testing of web applications across different browsers, operating systems, and devices. In the context of DevOps, LambdaTest plays a crucial role in ensuring the quality and reliability of software products throughout the continuous integration and continuous delivery (CI/CD) pipeline.
