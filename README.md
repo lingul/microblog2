@@ -27,7 +27,7 @@ LT --user {user's login email} --key {user's access key} --tunnelName {user's tu
 
 I also tested the bug tracking tool GoodDay Integration. This is how to establish integration with GoodDay from the LambdaTest account: https://www.lambdatest.com/support/docs/goodday-integration/
 
-## How does the tool relate to devops
+## How does the tool relate to DevOps
 Here are some ways LambdaTest relates to DevOps:
 
 Automated Testing: LambdaTest supports automated testing frameworks such as Selenium and Appium. These frameworks are commonly integrated into DevOps pipelines to automate the testing process, enabling rapid feedback on code changes and reducing the time taken for testing.
