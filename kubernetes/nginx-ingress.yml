@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nginx-ingress
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    cert-manager.io/issuer: "letsencrypt2"
+
+spec:
+  tls:
+  - hosts:
+    - gullmak.live
+    secretName: demo-tls
+  rules:
+  - host: gullmak.live
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: microblog
+            port:
+              number: 5000
